@@ -13,4 +13,9 @@ class Cell {
                 break;
         }
     }
+
+    draw(ctx, x, y) {
+        ctx.fillStyle = this.isWall ? 'blue' : 'black';
+        ctx.fillRect(x * 20, y * 20, 20, 20);
+    }
 }
