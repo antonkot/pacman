@@ -9,6 +9,10 @@ body {
     font-family: sans-serif;
 }
 
+h1 {
+    margin: 5px;
+}
+
 canvas#app {
     width: 540px;
     height: 620px;
