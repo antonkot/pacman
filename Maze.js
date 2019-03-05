@@ -1,3 +1,9 @@
+/*
+
+Class for maze. Takes text config and fills cells 2D-grid.
+
+*/
+
 class Maze {
     constructor(config) {
         this.cells = [];
@@ -11,7 +17,8 @@ class Maze {
         });
     }
 
-    draw() {
+    // Draw maze on a given context
+    draw(ctx) {
         for (var y = 0; y < this.cells.length; y++) {
             let line = this.cells[y];
             for (var x = 0; x < line.length; x++) {

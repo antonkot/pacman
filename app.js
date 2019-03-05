@@ -24,7 +24,7 @@ Update dunction.
 Calculates game mechanics and draws game screen.
 */
 function update(time) {
-    maze.draw();
+    maze.draw(ctx);
     requestAnimationFrame(update);
 }
 
