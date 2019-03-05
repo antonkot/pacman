@@ -34,5 +34,19 @@ class Cell {
     draw(ctx, x, y) {
         ctx.fillStyle = this.isWall ? 'blue' : 'black';
         ctx.fillRect(x * 20, y * 20, 20, 20);
+
+        if (!this.isWall) {
+            if (this.hasDot) {
+                ctx.fillStyle = 'white';
+                ctx.fillRect((x * 20) + 9, (y * 20) + 9, 2, 2);
+            }
+
+            if (this.hasEnergizer) {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.ellipse((x * 20) + 10, (y * 20) + 10, 4, 4, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
     }
 }
