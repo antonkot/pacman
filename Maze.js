@@ -15,7 +15,7 @@ class Maze {
 
                 switch (cell) {
                     case "P":
-                        characters.pacman = new Character(
+                        characters.pacman = new Pacman(
                             CELL_SIZE * (cellX + 1 / 2),
                             CELL_SIZE * (cellY + 1 / 2),
                             CELL_SIZE / 2 - 2

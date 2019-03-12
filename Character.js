@@ -3,6 +3,16 @@ class Character {
         this.x = x_;
         this.y = y_;
         this.r = r_;
+
+        this.speed = {
+            x: 0,
+            y: 0
+        }
+    }
+
+    update() {
+        this.x += this.speed.x;
+        this.y += this.speed.y;
     }
 
     draw(ctx) {
