@@ -12,6 +12,9 @@ class Character {
     }
 
     update() {
+        if (this.maze.isCollide()) {
+
+        }
         this.x += this.speed.x;
         this.y += this.speed.y;
     }
