@@ -16,6 +16,7 @@ class Maze {
                 switch (cell) {
                     case "P":
                         characters.pacman = new Pacman(
+                            this,
                             CELL_SIZE * (cellX + 1 / 2),
                             CELL_SIZE * (cellY + 1 / 2),
                             CELL_SIZE / 2 - 2
@@ -39,9 +40,11 @@ class Maze {
     }
 
     // Check collision between bounding sphere and box
-    isCollide(cx, cy, ax, ay, ar) {
-        let d = CELL_SIZE / 2 + ar;
-        if (Math.abs(cx - ax) > 0 || Math.abs(xy - ay) > 0) {
+    isCollide(character) {
+        let d = CELL_SIZE / 2 + character.r;
+        let x = CELL_SIZE * (Math.floor(character.x / CELL_SIZE) +
+            character.speed.x / Math.abs(character.speed.x));
+        if (Math.abs(x - character.x) > 0 || Math.abs(y - character.y) > 0) {
             return false;
         } else {
             return true;

@@ -1,8 +1,9 @@
 class Character {
-    constructor(x_, y_, r_) {
+    constructor(maze_, x_, y_, r_) {
         this.x = x_;
         this.y = y_;
         this.r = r_;
+        this.maze = maze_;
 
         this.speed = {
             x: 0,
