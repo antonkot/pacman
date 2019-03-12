@@ -5,13 +5,23 @@ Class for maze. Takes text config and fills cells 2D-grid.
 */
 
 class Maze {
-    constructor(config) {
+    constructor(config, characters) {
         this.cells = [];
 
-        config.split("\n").forEach(line => {
+        config.split("\n").forEach((line, cellY) => {
             let arr = [];
-            line.split('').forEach(cell => {
+            line.split('').forEach((cell, cellX) => {
                 arr.push(new Cell(cell));
+
+                switch (cell) {
+                    case "P":
+                        characters.pacman = new Character(
+                            CELL_SIZE * (cellX + 1 / 2),
+                            CELL_SIZE * (cellY + 1 / 2),
+                            CELL_SIZE / 2 - 2
+                        );
+                        break;
+                }
             });
             this.cells.push(arr);
         });
@@ -29,7 +39,12 @@ class Maze {
     }
 
     // Check collision between bounding sphere and box
-    isCollide() {
-
+    isCollide(cx, cy, ax, ay, ar) {
+        let d = CELL_SIZE / 2 + ar;
+        if (Math.abs(cx - ax) > 0 || Math.abs(xy - ay) > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -8,6 +8,8 @@ Default is empty cell.
 
 */
 
+const CELL_SIZE = 20;
+
 class Cell {
     constructor(char) {
         switch (char) {
@@ -33,18 +35,26 @@ class Cell {
     */
     draw(ctx, x, y) {
         ctx.fillStyle = this.isWall ? 'blue' : 'black';
-        ctx.fillRect(x * 20, y * 20, 20, 20);
+        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
         if (!this.isWall) {
             if (this.hasDot) {
                 ctx.fillStyle = 'white';
-                ctx.fillRect((x * 20) + 9, (y * 20) + 9, 2, 2);
+                ctx.fillRect(
+                    (x * CELL_SIZE) + (CELL_SIZE / 2 - 1),
+                    (y * CELL_SIZE) + (CELL_SIZE / 2 - 1),
+                    2, 2
+                );
             }
 
             if (this.hasEnergizer) {
                 ctx.fillStyle = 'white';
                 ctx.beginPath();
-                ctx.ellipse((x * 20) + 10, (y * 20) + 10, 4, 4, 0, 0, Math.PI * 2);
+                ctx.ellipse(
+                    (x * CELL_SIZE) + CELL_SIZE / 2,
+                    (y * CELL_SIZE) + CELL_SIZE / 2,
+                    4, 4, 0, 0, Math.PI * 2
+                );
                 ctx.fill();
             }
         }
