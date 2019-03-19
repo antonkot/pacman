@@ -17,8 +17,8 @@ class Maze {
                     case "P":
                         characters.pacman = new Pacman(
                             this,
-                            CELL_SIZE * (cellX + 1 / 2),
-                            CELL_SIZE * (cellY + 1 / 2),
+                            CELL_SIZE * cellX,
+                            CELL_SIZE * cellY,
                             CELL_SIZE / 2 - 2
                         );
                         break;
@@ -39,15 +39,54 @@ class Maze {
         }
     }
 
+    worldToGrid(x, y) {
+        return [
+            Math.round(x / CELL_SIZE),
+            Math.round(y / CELL_SIZE),
+        ]
+    }
+
+    gridToWorld(x, y) {
+        return [
+            x * CELL_SIZE,
+            y * CELL_SIZE
+        ]
+    }
+
     // Check collision between bounding sphere and box
     isCollide(character) {
-        let d = CELL_SIZE / 2 + character.r;
-        let x = CELL_SIZE * (Math.floor(character.x / CELL_SIZE) +
-            character.speed.x / Math.abs(character.speed.x));
-        if (Math.abs(x - character.x) > 0 || Math.abs(y - character.y) > 0) {
-            return false;
-        } else {
+        // // TODO: Tweak position according to speed direction
+
+        // Calculate current cell coordinates, where character is now
+        // from is's corner coordinates
+        let [currentX, currentY] = this.gridToWorld(
+            Math.round(character.x / CELL_SIZE),
+            Math.round(character.y / CELL_SIZE)
+        );
+
+        // Calculate normalized speed
+        let speedX = character.speed.x / Math.abs(character.speed.x + 1e-10);
+        let speedY = character.speed.y / Math.abs(character.speed.y + 1e-10);
+
+        // Calculate target cell coordinates, where character is going to be
+        let targetX = currentX + speedX * CELL_SIZE;
+        let targetY = currentY + speedY * CELL_SIZE;
+
+        let [cellX, cellY] = this.worldToGrid(targetX, targetY);
+
+        if (DEBUG) {
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+                targetX, targetY,
+                CELL_SIZE, CELL_SIZE
+            );
+        }
+
+        if (this.cells[cellY][cellX].isWall) {
             return true;
+        } else {
+            return false;
         }
     }
 }
