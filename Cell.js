@@ -8,8 +8,6 @@ Default is empty cell.
 
 */
 
-const CELL_SIZE = 20;
-
 class Cell {
     constructor(char) {
         switch (char) {

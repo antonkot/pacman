@@ -1,3 +1,8 @@
+/* Constants */
+const BASE_SPEED = 2;
+const CELL_SIZE = 20;
+const DEBUG = false;
+
 /*
 Global variables.
 */
@@ -6,6 +11,9 @@ let canvas = document.getElementById('app');
 let ctx = canvas.getContext('2d');
 
 let characters = {};
+
+let stepCounter = 0;
+let desiredSpeed;
 
 /*
 Set up function.
@@ -25,30 +33,29 @@ function setup() {
 }
 
 function onKeyDown(evt) {
-    let pacman = characters.pacman;
     switch (evt.keyCode) {
         case 37: // LEFT
-            pacman.speed = {
-                x: -1,
+            desiredSpeed = {
+                x: -BASE_SPEED,
                 y: 0
             };
             break;
         case 38: // UP
-            pacman.speed = {
+            desiredSpeed = {
                 x: 0,
-                y: -1
+                y: -BASE_SPEED
             };
             break;
         case 39: // RIGHT
-            pacman.speed = {
-                x: 1,
+            desiredSpeed = {
+                x: BASE_SPEED,
                 y: 0
             };
             break;
         case 40: // DOWN
-            pacman.speed = {
+            desiredSpeed = {
                 x: 0,
-                y: 1
+                y: BASE_SPEED
             };
             break;
     }
@@ -63,6 +70,15 @@ function update(time) {
     for (let character_name in characters) {
         characters[character_name].update();
         characters[character_name].draw(ctx);
+    }
+    stepCounter += BASE_SPEED;
+
+    let pacman = characters.pacman;
+    if (stepCounter >= CELL_SIZE) {
+        stepCounter = 0;
+        if (desiredSpeed && !maze.isCollide(pacman, desiredSpeed)) {
+            pacman.speed = desiredSpeed;
+        }
     }
     requestAnimationFrame(update);
 }

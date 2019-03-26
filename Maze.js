@@ -54,19 +54,23 @@ class Maze {
     }
 
     // Check collision between bounding sphere and box
-    isCollide(character) {
-        // // TODO: Tweak position according to speed direction
+    isCollide(character, speed) {
 
         // Calculate current cell coordinates, where character is now
         // from is's corner coordinates
         let [currentX, currentY] = this.gridToWorld(
-            Math.round(character.x / CELL_SIZE),
-            Math.round(character.y / CELL_SIZE)
+            character.speed.x > 0 ?
+            Math.floor(character.x / CELL_SIZE) :
+            Math.ceil(character.x / CELL_SIZE),
+
+            character.speed.y > 0 ?
+            Math.floor(character.y / CELL_SIZE) :
+            Math.ceil(character.y / CELL_SIZE)
         );
 
         // Calculate normalized speed
-        let speedX = character.speed.x / Math.abs(character.speed.x + 1e-10);
-        let speedY = character.speed.y / Math.abs(character.speed.y + 1e-10);
+        let speedX = speed.x / Math.abs(speed.x + 1e-10);
+        let speedY = speed.y / Math.abs(speed.y + 1e-10);
 
         // Calculate target cell coordinates, where character is going to be
         let targetX = currentX + speedX * CELL_SIZE;

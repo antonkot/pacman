@@ -1,5 +1,3 @@
-const DEBUG = true;
-
 class Character {
     constructor(maze_, x_, y_, r_) {
         this.x = x_;
@@ -14,7 +12,7 @@ class Character {
     }
 
     update() {
-        if (!this.maze.isCollide(this)) {
+        if (!this.maze.isCollide(this, this.speed)) {
             this.x += this.speed.x;
             this.y += this.speed.y;
         }
