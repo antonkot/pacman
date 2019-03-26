@@ -80,6 +80,7 @@ function update(time) {
             pacman.speed = desiredSpeed;
         }
     }
+
     requestAnimationFrame(update);
 }
 

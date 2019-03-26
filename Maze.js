@@ -11,7 +11,7 @@ class Maze {
         config.split("\n").forEach((line, cellY) => {
             let arr = [];
             line.split('').forEach((cell, cellX) => {
-                arr.push(new Cell(cell));
+                arr.push(new Cell(cell, cellX, cellY));
 
                 switch (cell) {
                     case "P":
@@ -53,12 +53,10 @@ class Maze {
         ]
     }
 
-    // Check collision between bounding sphere and box
-    isCollide(character, speed) {
-
-        // Calculate current cell coordinates, where character is now
-        // from is's corner coordinates
-        let [currentX, currentY] = this.gridToWorld(
+    // Calculate current cell coordinates, where character is now
+    // from is's corner coordinates
+    getCurrentCell(character) {
+        let [currentX, currentY] = [
             character.speed.x > 0 ?
             Math.floor(character.x / CELL_SIZE) :
             Math.ceil(character.x / CELL_SIZE),
@@ -66,26 +64,24 @@ class Maze {
             character.speed.y > 0 ?
             Math.floor(character.y / CELL_SIZE) :
             Math.ceil(character.y / CELL_SIZE)
-        );
+        ];
+        return this.cells[currentY][currentX];
+    }
+
+    // Check collision between bounding sphere and box
+    isCollide(character, desiredSpeed) {
+        let currentCell = this.getCurrentCell(character);
+        let [currentWorldX, currentWorldY] = this.gridToWorld(currentCell.x, currentCell.y);
 
         // Calculate normalized speed
-        let speedX = speed.x / Math.abs(speed.x + 1e-10);
-        let speedY = speed.y / Math.abs(speed.y + 1e-10);
+        let speedX = desiredSpeed.x / Math.abs(desiredSpeed.x + 1e-10);
+        let speedY = desiredSpeed.y / Math.abs(desiredSpeed.y + 1e-10);
 
         // Calculate target cell coordinates, where character is going to be
-        let targetX = currentX + speedX * CELL_SIZE;
-        let targetY = currentY + speedY * CELL_SIZE;
+        let targetX = currentWorldX + speedX * CELL_SIZE;
+        let targetY = currentWorldY + speedY * CELL_SIZE;
 
         let [cellX, cellY] = this.worldToGrid(targetX, targetY);
-
-        if (DEBUG) {
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(
-                targetX, targetY,
-                CELL_SIZE, CELL_SIZE
-            );
-        }
 
         if (this.cells[cellY][cellX].isWall) {
             return true;

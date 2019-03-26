@@ -9,7 +9,9 @@ Default is empty cell.
 */
 
 class Cell {
-    constructor(char) {
+    constructor(char, x_, y_) {
+        this.x = x_;
+        this.y = y_;
         switch (char) {
             case '#':
                 this.isWall = true;
