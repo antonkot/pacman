@@ -22,6 +22,14 @@ class Maze {
                             CELL_SIZE / 2 - 2
                         );
                         break;
+                    case "b":
+                        characters.blinky = new Blinky(
+                            this,
+                            CELL_SIZE * cellX,
+                            CELL_SIZE * cellY,
+                            CELL_SIZE / 2 - 2
+                        );
+                        break;
                 }
             });
             this.cells.push(arr);

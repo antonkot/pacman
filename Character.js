@@ -26,7 +26,5 @@ class Character {
             this.r, this.r, 0, 0, Math.PI * 2
         );
         ctx.fill();
-
-
     }
 }
