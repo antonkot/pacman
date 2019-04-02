@@ -97,4 +97,32 @@ class Maze {
             return false;
         }
     }
+
+    function astar(start, target) {
+        let closed = [];
+        let open = [];
+
+        open.push([start]);
+
+        while (open.length > 0) {
+            let p = open.shift();
+            let x = p[p.length - 1];
+
+            if (closed.indexOf(x) != -1) {
+                continue;
+            }
+
+            if (x == target) {
+                return p;
+            }
+
+            closed.push(x);
+
+            for (var i = x[0] - 1; i <= x[0] + 1; i++) {
+                for (var j = x[1] - 1; j <= x[1] + 1; j++) {
+
+                }
+            }
+        }
+    }
 }
