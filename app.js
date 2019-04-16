@@ -1,7 +1,7 @@
 /* Constants */
 const BASE_SPEED = 2;
 const CELL_SIZE = 20;
-const DEBUG = false;
+const DEBUG = true;
 
 /*
 Global variables.
@@ -15,6 +15,8 @@ let characters = {};
 let stepCounter = 0;
 let desiredSpeed;
 
+let path;
+
 /*
 Set up function.
 Runs at very beginning, loads data and sets up initial values.
@@ -27,6 +29,12 @@ function setup() {
             maze = new Maze(text, characters);
 
             document.addEventListener('keydown', onKeyDown);
+
+            path = maze.astar(
+                maze.getCurrentCell(characters.blinky),
+                maze.getCurrentCell(characters.pacman),
+            );
+
 
             requestAnimationFrame(update);
         });
@@ -79,6 +87,25 @@ function update(time) {
         if (desiredSpeed && !maze.isCollide(pacman, desiredSpeed)) {
             pacman.speed = desiredSpeed;
         }
+    }
+
+    if (DEBUG) {
+        ctx.beginPath();
+        let first = true;
+        for (let cell of path) {
+            let point = [
+                CELL_SIZE * (cell.x + 0.5),
+                CELL_SIZE * (cell.y + 0.5)
+            ];
+            if (first) {
+                first = false;
+                ctx.moveTo(point[0], point[1]);
+            }
+            ctx.lineTo(point[0], point[1]);
+        }
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'yellow';
+        ctx.stroke();
     }
 
     requestAnimationFrame(update);

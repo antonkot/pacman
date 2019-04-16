@@ -12,6 +12,12 @@ class Cell {
     constructor(char, x_, y_) {
         this.x = x_;
         this.y = y_;
+
+        // A star params
+        this.g = Infinity;
+        this.f = Infinity;
+        this.from = null;
+
         switch (char) {
             case '#':
                 this.isWall = true;
@@ -26,8 +32,13 @@ class Cell {
                 this.isWall = false;
                 this.hasDot = false;
                 this.hasEnergizer = false;
+                this.isTurn = false;
                 break;
         }
+    }
+
+    h(end) {
+        return (this.x - end.x) ** 2 + (this.y - end.y) ** 2; // Squared Euclidian Distance
     }
 
     /*
