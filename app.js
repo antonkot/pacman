@@ -70,8 +70,16 @@ function update(time) {
 
     maze.draw(ctx);
     for (let character_name in characters) {
-        characters[character_name].update(pacman);
-        characters[character_name].draw(ctx);
+        let char = characters[character_name];
+        if (
+            char != pacman &&
+            maze.getCurrentCell(char) == maze.getCurrentCell(pacman)
+        ) {
+            return;
+        }
+
+        char.update(pacman);
+        char.draw(ctx);
     }
     stepCounter += BASE_SPEED;
 
