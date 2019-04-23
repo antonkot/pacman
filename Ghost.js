@@ -10,6 +10,57 @@ class Ghost extends Character {
         };
 
         this.mode = this.MODES.scatter;
-        this.target = [0, 0];
+        this.target = null;
+
+        this.needSearch = true;
+        this.path = [];
+    }
+
+    update(pacman) {
+        let cell = this.maze.getCurrentCell(this);
+        if (cell.isTurn) {
+            if (this.needSearch) {
+                this.path = this.maze.astar(
+                    cell,
+                    this.maze.cells[this.target.y][this.target.x],
+                );
+                this.needSearch = false;
+            }
+        }
+
+        if (this.path.length > 0) {
+            let next = this.path[this.path.length - 1];
+            if (next == cell) {
+                this.path.pop();
+                next = this.path[this.path.length - 1];
+            }
+            if (next) {
+                this.speed.x = next.x - cell.x;
+                this.speed.y = next.y - cell.y;
+            }
+        }
+
+        super.update(pacman);
+    }
+
+    draw(ctx) {
+        if (DEBUG) {
+            ctx.beginPath();
+            let first = true;
+            for (let cell of this.path) {
+                let point = [
+                    CELL_SIZE * (cell.x + 0.5),
+                    CELL_SIZE * (cell.y + 0.5)
+                ];
+                if (first) {
+                    first = false;
+                    ctx.moveTo(point[0], point[1]);
+                }
+                ctx.lineTo(point[0], point[1]);
+            }
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'yellow';
+            ctx.stroke();
+        }
     }
 }

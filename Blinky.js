@@ -11,5 +11,12 @@ class Blinky extends Ghost {
             this.r, this.r, 0, 0, Math.PI * 2
         );
         ctx.fill();
+
+        super.draw(ctx);
+    }
+
+    update(pacman) {
+        this.target = this.maze.getCurrentCell(pacman);
+        super.update(pacman);
     }
 }

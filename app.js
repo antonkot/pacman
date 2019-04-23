@@ -15,8 +15,6 @@ let characters = {};
 let stepCounter = 0;
 let desiredSpeed;
 
-let path;
-
 /*
 Set up function.
 Runs at very beginning, loads data and sets up initial values.
@@ -29,12 +27,6 @@ function setup() {
             maze = new Maze(text, characters);
 
             document.addEventListener('keydown', onKeyDown);
-
-            path = maze.astar(
-                maze.getCurrentCell(characters.blinky),
-                maze.getCurrentCell(characters.pacman),
-            );
-
 
             requestAnimationFrame(update);
         });
@@ -74,38 +66,20 @@ Update dunction.
 Calculates game mechanics and draws game screen.
 */
 function update(time) {
+    let pacman = characters.pacman;
+
     maze.draw(ctx);
     for (let character_name in characters) {
-        characters[character_name].update();
+        characters[character_name].update(pacman);
         characters[character_name].draw(ctx);
     }
     stepCounter += BASE_SPEED;
 
-    let pacman = characters.pacman;
     if (stepCounter >= CELL_SIZE) {
         stepCounter = 0;
         if (desiredSpeed && !maze.isCollide(pacman, desiredSpeed)) {
             pacman.speed = desiredSpeed;
         }
-    }
-
-    if (DEBUG) {
-        ctx.beginPath();
-        let first = true;
-        for (let cell of path) {
-            let point = [
-                CELL_SIZE * (cell.x + 0.5),
-                CELL_SIZE * (cell.y + 0.5)
-            ];
-            if (first) {
-                first = false;
-                ctx.moveTo(point[0], point[1]);
-            }
-            ctx.lineTo(point[0], point[1]);
-        }
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'yellow';
-        ctx.stroke();
     }
 
     requestAnimationFrame(update);
