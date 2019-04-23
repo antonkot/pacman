@@ -12,20 +12,18 @@ class Ghost extends Character {
         this.mode = this.MODES.scatter;
         this.target = null;
 
-        this.needSearch = true;
         this.path = [];
+        this.lastTurn = null;
     }
 
     update(pacman) {
         let cell = this.maze.getCurrentCell(this);
-        if (cell.isTurn) {
-            if (this.needSearch) {
-                this.path = this.maze.astar(
-                    cell,
-                    this.maze.cells[this.target.y][this.target.x],
-                );
-                this.needSearch = false;
-            }
+        if (cell.isTurn && cell != this.lastTurn) {
+            this.path = this.maze.astar(
+                cell,
+                this.maze.cells[this.target.y][this.target.x],
+            );
+            this.lastTurn = cell;
         }
 
         if (this.path.length > 0) {
