@@ -14,28 +14,49 @@ class Ghost extends Character {
 
         this.path = [];
         this.lastTurn = null;
+
+        this.scatterTime = null;
+    }
+
+    changeMode(mode_) {
+        this.mode = mode_;
+        switch (mode_) {
+            case this.MODES.scatter:
+                this.scatterTime = (new Date()).getTime();
+                break;
+            default:
+
+        }
     }
 
     update(pacman) {
         let cell = this.maze.getCurrentCell(this);
-        if (cell.isTurn && cell != this.lastTurn) {
-            this.path = this.maze.astar(
-                cell,
-                this.maze.cells[this.target.y][this.target.x],
-            );
-            this.lastTurn = cell;
+
+        if (cell != this.target) {
+            if (cell.isTurn && cell != this.lastTurn) {
+                this.path = this.maze.astar(
+                    cell,
+                    this.maze.cells[this.target.y][this.target.x],
+                );
+                this.lastTurn = cell;
+            }
+
+            if (this.path.length > 0) {
+                let next = this.path[this.path.length - 1];
+                if (next == cell) {
+                    this.path.pop();
+                    next = this.path[this.path.length - 1];
+                }
+                if (next) {
+                    this.speed.x = next.x - cell.x;
+                    this.speed.y = next.y - cell.y;
+                }
+            }
         }
 
-        if (this.path.length > 0) {
-            let next = this.path[this.path.length - 1];
-            if (next == cell) {
-                this.path.pop();
-                next = this.path[this.path.length - 1];
-            }
-            if (next) {
-                this.speed.x = next.x - cell.x;
-                this.speed.y = next.y - cell.y;
-            }
+        let time = (new Date()).getTime();
+        if (time - this.scatterTime >= SCATTER_TIME) {
+            this.changeMode(this.MODES.chase);
         }
 
         super.update(pacman);

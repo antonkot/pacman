@@ -16,7 +16,16 @@ class Blinky extends Ghost {
     }
 
     update(pacman) {
-        this.target = this.maze.getCurrentCell(pacman);
+        switch (this.mode) {
+            case this.MODES.scatter:
+                this.target = this.maze.cells[1][1];
+                break;
+            case this.MODES.chase:
+                this.target = this.maze.getCurrentCell(pacman);
+                break;
+            default:
+
+        }
         super.update(pacman);
     }
 }

@@ -2,6 +2,7 @@
 const BASE_SPEED = 2;
 const CELL_SIZE = 20;
 const DEBUG = true;
+const SCATTER_TIME = 2000;
 
 /*
 Global variables.

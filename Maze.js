@@ -30,6 +30,9 @@ class Maze {
                             CELL_SIZE * cellY,
                             CELL_SIZE / 2 - 2
                         );
+                        characters.blinky.changeMode(
+                            characters.blinky.MODES.scatter
+                        );
                         break;
                 }
             });
