@@ -34,6 +34,17 @@ class Maze {
                             characters.blinky.MODES.scatter
                         );
                         break;
+                    case "p":
+                        characters.pinky = new Pinky(
+                            this,
+                            CELL_SIZE * cellX,
+                            CELL_SIZE * cellY,
+                            CELL_SIZE / 2 - 2
+                        );
+                        characters.pinky.changeMode(
+                            characters.pinky.MODES.scatter
+                        );
+                        break;
                 }
             });
             this.cells.push(arr);

@@ -41,7 +41,7 @@ class Ghost extends Character {
                 this.lastTurn = cell;
             }
 
-            if (this.path.length > 0) {
+            if (this.path && this.path.length > 0) {
                 let next = this.path[this.path.length - 1];
                 if (next == cell) {
                     this.path.pop();
@@ -63,7 +63,7 @@ class Ghost extends Character {
     }
 
     draw(ctx) {
-        if (DEBUG) {
+        if (DEBUG && this.path) {
             ctx.beginPath();
             let first = true;
             for (let cell of this.path) {
