@@ -15,7 +15,7 @@ class Pinky extends Ghost {
         super.draw(ctx);
     }
 
-    update(pacman) {
+    update(characters) {
         let mazeWidth = this.maze.cells[0].length - 1;
         let mazeHeight = this.maze.cells.length - 1;
         switch (this.mode) {
@@ -23,10 +23,10 @@ class Pinky extends Ghost {
                 this.target = this.maze.cells[1][mazeWidth - 1];
                 break;
             case this.MODES.chase:
-                let pacmanCell = this.maze.getCurrentCell(pacman);
-                let x = pacmanCell.x + Math.sign(pacman.speed.x) * 4;
+                let pacmanCell = this.maze.getCurrentCell(characters.pacman);
+                let x = pacmanCell.x + Math.sign(characters.pacman.speed.x) * 4;
                 x = x.clamp(0, mazeWidth - 1);
-                let y = pacmanCell.y + Math.sign(pacman.speed.y) * 4;
+                let y = pacmanCell.y + Math.sign(characters.pacman.speed.y) * 4;
                 y = y.clamp(0, mazeHeight - 1);
                 let target = this.maze.cells[y][x];
                 if (target.isWall) {
@@ -38,6 +38,6 @@ class Pinky extends Ghost {
             default:
 
         }
-        super.update(pacman);
+        super.update(characters);
     }
 }

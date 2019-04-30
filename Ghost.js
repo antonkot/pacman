@@ -30,7 +30,7 @@ class Ghost extends Character {
         }
     }
 
-    update(pacman) {
+    update(characters) {
         let cell = this.maze.getCurrentCell(this);
 
         switch (this.mode) {
@@ -67,7 +67,7 @@ class Ghost extends Character {
             }
         }
 
-        super.update(pacman);
+        super.update(characters);
     }
 
     draw(ctx) {

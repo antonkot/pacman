@@ -11,7 +11,7 @@ class Character {
         }
     }
 
-    update(pacman) {
+    update(characters) {
         if (!this.maze.isCollide(this, this.speed)) {
             this.x += this.speed.x;
             this.y += this.speed.y;

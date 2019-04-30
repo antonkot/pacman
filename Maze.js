@@ -11,6 +11,9 @@ class Maze {
         // Parce map and fill the maze
         config.split("\n").forEach((line, cellY) => {
             let arr = [];
+            if (line.length == 0) {
+                return;
+            }
             line.split('').forEach((cell, cellX) => {
                 arr.push(new Cell(cell, cellX, cellY));
 
@@ -36,6 +39,14 @@ class Maze {
                         break;
                     case "p":
                         characters.pinky = new Pinky(
+                            this,
+                            CELL_SIZE * cellX,
+                            CELL_SIZE * cellY,
+                            CELL_SIZE / 2 - 2
+                        );
+                        break;
+                    case "i":
+                        characters.inky = new Inky(
                             this,
                             CELL_SIZE * cellX,
                             CELL_SIZE * cellY,

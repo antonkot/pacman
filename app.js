@@ -81,7 +81,7 @@ function update(time) {
             return;
         }
 
-        char.update(pacman);
+        char.update(characters);
         char.draw(ctx);
     }
     stepCounter += BASE_SPEED;
@@ -97,9 +97,9 @@ function update(time) {
 
     if (
         pacman.eatenDots >= 30 &&
-        characters.pinky.mode == characters.pinky.MODES.wait
+        characters.inky.mode == characters.inky.MODES.wait
     ) {
-        characters.pinky.changeMode(characters.pinky.MODES.scatter);
+        characters.inky.changeMode(characters.inky.MODES.scatter);
     }
 
     requestAnimationFrame(update);
