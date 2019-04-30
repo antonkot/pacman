@@ -16,6 +16,8 @@ let characters = {};
 let stepCounter = 0;
 let desiredSpeed;
 
+let header = document.getElementById('header');
+
 /*
 Set up function.
 Runs at very beginning, loads data and sets up initial values.
@@ -89,6 +91,15 @@ function update(time) {
         if (desiredSpeed && !maze.isCollide(pacman, desiredSpeed)) {
             pacman.speed = desiredSpeed;
         }
+    }
+
+    header.innerText = `PACMAN: ${pacman.eatenDots} ${pacman.score}`;
+
+    if (
+        pacman.eatenDots >= 30 &&
+        characters.pinky.mode == characters.pinky.MODES.wait
+    ) {
+        characters.pinky.changeMode(characters.pinky.MODES.scatter);
     }
 
     requestAnimationFrame(update);

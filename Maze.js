@@ -41,9 +41,6 @@ class Maze {
                             CELL_SIZE * cellY,
                             CELL_SIZE / 2 - 2
                         );
-                        characters.pinky.changeMode(
-                            characters.pinky.MODES.scatter
-                        );
                         break;
                 }
             });

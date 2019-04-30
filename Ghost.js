@@ -3,13 +3,14 @@ class Ghost extends Character {
         super(maze_, x_, y_, r_);
 
         this.MODES = {
+            wait: 0,
             chase: 1,
             scatter: 2,
             fear: 3,
             respawn: 4
         };
 
-        this.mode = this.MODES.scatter;
+        this.mode = this.MODES.wait;
         this.target = null;
 
         this.path = [];
@@ -32,6 +33,18 @@ class Ghost extends Character {
     update(pacman) {
         let cell = this.maze.getCurrentCell(this);
 
+        switch (this.mode) {
+            case this.MODES.wait:
+                this.target = this.maze.getCurrentCell(this);
+                break;
+            case this.MODES.scatter:
+                let time = (new Date()).getTime();
+                if (time - this.scatterTime >= SCATTER_TIME) {
+                    this.changeMode(this.MODES.chase);
+                }
+                break;
+        }
+
         if (cell != this.target) {
             if (cell.isTurn && cell != this.lastTurn) {
                 this.path = this.maze.astar(
@@ -52,11 +65,6 @@ class Ghost extends Character {
                     this.speed.y = next.y - cell.y;
                 }
             }
-        }
-
-        let time = (new Date()).getTime();
-        if (time - this.scatterTime >= SCATTER_TIME) {
-            this.changeMode(this.MODES.chase);
         }
 
         super.update(pacman);
