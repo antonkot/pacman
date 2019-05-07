@@ -97,6 +97,13 @@ function update(time) {
 
     if (
         pacman.eatenDots >= 30 &&
+        characters.pinky.mode == characters.pinky.MODES.wait
+    ) {
+        characters.pinky.changeMode(characters.pinky.MODES.scatter);
+    }
+
+    if (
+        pacman.eatenDots >= 60 &&
         characters.inky.mode == characters.inky.MODES.wait
     ) {
         characters.inky.changeMode(characters.inky.MODES.scatter);

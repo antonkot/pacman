@@ -46,12 +46,11 @@ class Ghost extends Character {
         }
 
         if (cell != this.target) {
-            if (cell.isTurn && cell != this.lastTurn) {
+            if (cell.isTurn) {
                 this.path = this.maze.astar(
                     cell,
                     this.maze.cells[this.target.y][this.target.x],
                 );
-                this.lastTurn = cell;
             }
 
             if (this.path && this.path.length > 0) {
@@ -61,8 +60,8 @@ class Ghost extends Character {
                     next = this.path[this.path.length - 1];
                 }
                 if (next) {
-                    this.speed.x = next.x - cell.x;
-                    this.speed.y = next.y - cell.y;
+                    this.speed.x = next.x - cell.x
+                    this.speed.y = next.y - cell.y
                 }
             }
         }

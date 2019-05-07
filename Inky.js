@@ -12,6 +12,15 @@ class Inky extends Ghost {
         );
         ctx.fill();
 
+        if (DEBUG && this.lastTurn) {
+            ctx.fillStyle = 'none';
+            ctx.strokeStyle = 'yellow';
+            ctx.strokeRect(
+                this.target.x * CELL_SIZE, this.target.y * CELL_SIZE,
+                CELL_SIZE, CELL_SIZE
+            );
+        }
+
         super.draw(ctx);
     }
 
@@ -20,7 +29,6 @@ class Inky extends Ghost {
         let mazeHeight = this.maze.cells.length - 1; //30
         switch (this.mode) {
             case this.MODES.scatter:
-                console.log(mazeHeight);
                 this.target = this.maze.cells[mazeHeight - 1][mazeWidth - 1];
                 break;
             case this.MODES.chase:
